@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="mt-4 mb-4 text-center text-primary"> <b> {{title}} </b></h1>
+
+        <span id="message"></span>
+        <div class="card">
+
+            <div class="card-header">
+                <div class="row">
+                    <div class="col col-sm-9">
+                        Sample Data
+                    </div>
+                    <div class="col col-sm-3">
+                        <button type="button" id="add_data" class="btn btn-success btn-sm float-end"
+                            data-bs-toggle="modal" data-bs-target="#action_modal">Add</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-body">
+
+
+
+                {{!-- <div class="alert alert-success" role="alert">
+                    {{message}}
+
+                </div> --}}
+
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered" id="sample_data">
+                        <thead>
+                            <tr>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Gender</th>
+                                <th>Age</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    {{!-- This modal is used to add the data --}}
+    <!-- Modal -->
+    <div class="modal fade" id="action_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/sample/action" method="post" id="sample_form">
+                    <div class="modal-header" id="dynamic_modal_title">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="mb-3">
+                            <label for="exmapleFormControlinput1" class="form-label">First Name:</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name"
+                                placeholder="Enter your first name:">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exmapleFormControlinput1" class="form-label">Last Name:</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name"
+                                placeholder="Enter your first name:">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exmapleFormControlinput1" class="form-label">Gender</label>
+                            <select name="gender" id="gender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exmapleFormControlinput1" class="form-label">Age</label>
+                            <input type="number" class="form-control" id="age" name="age" placeholder="Enter your age:">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+
+
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="action_button">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    {{!-- This modal will pop out when we click edit button --}}
+    <!-- Modal2 -->
+    <div class="modal fade" id="action_modal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/sample/add_update" method="post">
+                    <div class="modal-header" id="dynamic_modal_title">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="mb-3">
+                            <label for="exmapleFormControlinput1" class="form-label">First Name:</label>
+                            <input type="text" class="form-control" id="first_name1" name="first_name"
+                                placeholder="Enter your first name:">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exmapleFormControlinput1" class="form-label">Last Name:</label>
+                            <input type="text" class="form-control" id="last_name1" name="last_name"
+                                placeholder="Enter your first name:">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exmapleFormControlinput1" class="form-label">Gender</label>
+                            <select name="gender" id="gender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exmapleFormControlinput1" class="form-label">Age</label>
+                            <input type="number" class="form-control" id="age1" name="age"
+                                placeholder="Enter your age:">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+
+                        {{!-- This value will be passed when we finish editing a row from database, data from database
+                        will enter in this modal then we will edit it, id of that row will be passed to it --}}
+                        <input type="hidden" name="action" id="studentid" value="" />
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="action_button2">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <script>
+        if ({{ message }}== 0) {
+            document.getElementById('message').innerHTML += `
+            <div class="alert alert-success">  Successfully edited   </div>
+            `;
+
+            setTimeout(() => {
+
+
+                window.location.href = "/sample";
+            }, 2000)
+
+        }
+        else if ({{ message }}== 1) {
+            document.getElementById('message').innerHTML += `
+            <div class="alert alert-danger">  Error Updating   </div>
+            `;
+
+            setTimeout(() => {
+                window.location.href = "/sample";
+            }, 2000)
+        }
+        else {
+            $('#message').innerHTML += ``;
+
+        }
+
+
+
+
+
+
+        $(document).ready(() => {
+            load_data();
+
+
+
+            function load_data() {
+                $.ajax({
+                    url: 'http://localhost:3000/sample/action',
+                    method: 'POST',
+                    data: { action: 'fetch' },
+                    dataType: 'JSON',
+                    success: (response) => {
+                        let html = '';
+                        if (response.data.length > 0) {
+                            for (let count = 0; count < response.data.length; count++) {
+                                html += `
+                                <tr>
+                                    <td>`+ response.data[count].first_name + `</td>
+                                    <td>`+ response.data[count].last_name + `</td>
+                                    <td>`+ response.data[count].gender + `</td>
+                                    <td>`+ response.data[count].age + `</td>
+                                    <td> 
+                                    <button type="button" data-eid='${response.data[count].id}' id='edit' data-bs-toggle="modal" data-bs-target="#action_modal2" class="btn btn-success edit">Edit</button> 
+                                    <button type="button"  data-did='${response.data[count].id}' id='del' class="btn btn-danger delete"   > Delete</button >
+                                   
+                           
+                                    </td >
+                                </tr >
+                                `;
+                            }
+                        }
+                        $('#sample_data tbody').html(html);
+                    }
+
+                })
+
+
+            }
+            $('#add_data').click(() => {
+                $('#dynamic_modal_title').text('Add Data');
+                $('#sample_form')[0].reset();
+                $('#action_button').text('Add');
+                $('#action_modal').modal('show');
+
+            })
+
+            $('#sample_form').on('submit', (event) => {
+                event.preventDefault();
+                $.ajax({
+                    url: 'http://localhost:3000/sample/add',
+                    method: 'POST',
+                    data: $('#sample_form').serialize(),
+                    dataType: "JSON",
+                    beforeSend: () => {
+                        $('#action_button').attr('disabled', 'disabled');
+                    },
+                    success: (response) => {
+                        $('#action_button').attr('disabled', false);
+                        $('#message').html('<div class="alert alert-success"> ' + response.message + ' </div>')
+                        $('#action_modal').modal('hide');
+                        load_data();
+
+                        setTimeout(() => {
+                            $('#message').html('');
+                        }, 2000)
+
+
+                    }
+                })
+            });
+
+            $(document).on('click', '.edit', function () {
+                let id = $(this).data('eid');
+
+                $.ajax({
+                    url: 'http://localhost:3000/sample/edit',
+                    method: 'POST',
+                    data: { id: id },
+                    dataType: 'JSON',
+                    success: (response) => {
+                        $('#first_name1').val(response.first_name);
+                        $('#last_name1').val(response.last_name);
+                        $('#gender1').val(response.gender);
+                        $('#age1').val(response.age);
+                        $('#studentid').val(response.id);
+                    }
+                })
+            })
+
+
+
+
+
+
+
+
+
+            $(document).on('click', '.delete', function () {
+                let id = $(this).data('did');
+                $.ajax({
+                    url: 'http://localhost:3000/sample/delete',
+                    method: 'DELETE',
+                    data: { id: id },
+                    dataType: 'JSON',
+                    success: (response) => {
+                        $('#message').html('<div class="alert alert-success"> ' + response.message + ' </div>')
+                        load_data();
+
+                        setTimeout(() => {
+                            $('#message').html('');
+                        }, 2000)
+                    }
+                })
+            })
+
+
+        })
+    </script>
+
+</body>
+
+</html>
